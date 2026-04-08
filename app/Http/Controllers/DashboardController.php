@@ -9,11 +9,11 @@ class DashboardController extends Controller
 {
     public function admin()
     {
-        $total     = Aspiration::count();
-        $baru      = Aspiration::where('status', 'baru')->count();
-        $diproses  = Aspiration::where('status', 'diproses')->count();
-        $selesai   = Aspiration::where('status', 'selesai')->count();
-        $recent    = Aspiration::with('pelapor')->latest()->take(5)->get();
+        $total    = Aspiration::count();
+        $baru     = Aspiration::where('status', 'menunggu')->count();
+        $diproses = Aspiration::where('status', 'proses')->count();
+        $selesai  = Aspiration::where('status', 'selesai')->count();
+        $recent   = Aspiration::with('pelapor')->latest()->take(5)->get();
 
         return view('admin.dashboard-admin', compact('total', 'baru', 'diproses', 'selesai', 'recent'));
     }
@@ -26,8 +26,8 @@ class DashboardController extends Controller
         return view('siswa.dashboard-siswa', [
             'aspirasi'      => $aspirasi,
             'totalAspirasi' => $aspirasi->count(),
-            'menunggu'      => $aspirasi->where('status', 'baru')->count(),
-            'diproses'      => $aspirasi->where('status', 'diproses')->count(),
+            'menunggu'      => $aspirasi->where('status', 'menunggu')->count(),
+            'diproses'      => $aspirasi->where('status', 'proses')->count(),
             'selesai'       => $aspirasi->where('status', 'selesai')->count(),
         ]);
     }
